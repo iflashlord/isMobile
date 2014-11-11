@@ -21,6 +21,17 @@
         other_blackberry    = /BlackBerry/i,
         other_blackberry_10 = /BB10/i,
         other_opera         = /Opera Mini/i,
+        
+    	other_firefox_os	= /Firefox OS/i ,
+        other_maemo			= /Maemo/i ,
+		other_meego			= /Meego/i ,
+		other_symbian 		= /Symbian/i,
+		other_ubuntu_touch  = /Ubuntu Touch/i ,
+		other_web_os		= /webOS/i ,
+		other_windows_ce	= /Windows CE/i ,
+		other_windows_phone	= /Windows Phone/i , 
+		other_windows_rt 	= /Windows RT/i ,
+	
         other_firefox       = /(?=.*\bFirefox\b)(?=.*\bMobile\b)/i, // Match 'Firefox' AND 'Mobile'
         seven_inch = new RegExp(
             '(?:' +         // Non-capturing group
@@ -42,6 +53,10 @@
             '|' +           // OR
 
             'GT-P1000' +    // Galaxy Tab 7 inch
+            
+             '|' +           // OR
+
+            'MediaPad 7 Youth 2' +    // MediaPad 7 Youth 2 7 inch
 
             ')',            // End non-capturing group
 
@@ -75,7 +90,18 @@
             blackberry10: match(other_blackberry_10, ua),
             opera:        match(other_opera, ua),
             firefox:      match(other_firefox, ua),
-            device:       match(other_blackberry, ua) || match(other_blackberry_10, ua) || match(other_opera, ua) || match(other_firefox, ua)
+            
+            firefoxos:    match(other_firefox_os, ua),
+			maemo:     	  match(other_maemo, ua),
+			meego:    	  match(other_meego, ua),
+			symbian:      match(other_symbian, ua),
+			ubuntutouch:  match(other_ubuntu_touch, ua),
+			webos:   	  match(other_web_os, ua),
+			windowsce:    match(other_windows_ce, ua),
+			windowsphone: match(other_windows_phone, ua),
+			windowsrt:    match(other_windows_rt, ua),
+			
+            device:       match(other_blackberry, ua) || match(other_blackberry_10, ua) || match(other_firefox_os, ua) || match(other_web_os, ua)|| match(other_ubuntu_touch, ua)|| match(other_meego, ua) || match(other_maemo, ua) || match(other_symbian, ua) || match(other_windows_phone, ua) || match(other_opera, ua) || match(other_firefox, ua)
         };
         this.seven_inch = match(seven_inch, ua);
         this.any = this.apple.device || this.android.device || this.windows.device || this.other.device || this.seven_inch;
