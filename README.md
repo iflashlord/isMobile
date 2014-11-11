@@ -21,7 +21,7 @@ I couldn't do detection on the back-end, because the entire site was cached and 
 
 So I resorted to UA sniffing.
 
-I tried to keep the script small (**currently ~740 bytes, minified**) and simple, because it would need to execute in the `<head>`, which is generally a bad idea, since JS blocks downloading and rendering of anything else while it parses and executes. In the case of mobile redirection, I don't mind so much, because I want to start the redirect as soon as possible, before the device has a chance to start downloading and rendering stuff. For non-mobile platforms, the script should execute fast, so the browser can quickly get back to downloading and rendering.
+I tried to keep the script small (**currently ~1.70 KB, minified**) and simple, because it would need to execute in the `<head>`, which is generally a bad idea, since JS blocks downloading and rendering of anything else while it parses and executes. In the case of mobile redirection, I don't mind so much, because I want to start the redirect as soon as possible, before the device has a chance to start downloading and rendering stuff. For non-mobile platforms, the script should execute fast, so the browser can quickly get back to downloading and rendering.
 
 ## How it works
 
@@ -58,6 +58,7 @@ The following properies of the `isMobile` object will either be `true` or `false
 		- Kindle Fire
 		- Nook Tablet 7 inch
 		- Galaxy Tab 7 inch
+		- MediaPad 7 Youth 2
 
 ### "Other" devices
 
@@ -85,7 +86,7 @@ I include the minified version of the script, inline, and at the top of the `<he
     <meta charset="utf-8">
     <script>
         // Minified version of isMobile included in the HTML since it's <1kb
-        (function(i){var e=/iPhone/i,n=/iPod/i,o=/iPad/i,t=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,r=/Android/i,d=/BlackBerry/i,s=/Opera Mini/i,a=/IEMobile/i,b=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,h=RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),c=function(i,e){return i.test(e)},l=function(i){var l=i||navigator.userAgent;this.apple={phone:c(e,l),ipod:c(n,l),tablet:c(o,l),device:c(e,l)||c(n,l)||c(o,l)},this.android={phone:c(t,l),tablet:!c(t,l)&&c(r,l),device:c(t,l)||c(r,l)},this.other={blackberry:c(d,l),opera:c(s,l),windows:c(a,l),firefox:c(b,l),device:c(d,l)||c(s,l)||c(a,l)||c(b,l)},this.seven_inch=c(h,l),this.any=this.apple.device||this.android.device||this.other.device||this.seven_inch},v=i.isMobile=new l;v.Class=l})(window);
+       (function(e){var t=/iPhone/i,n=/iPod/i,r=/iPad/i,i=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,s=/Android/i,o=/IEMobile/i,u=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,a=/BlackBerry/i,f=/BB10/i,l=/Opera Mini/i,c=/Firefox OS/i,h=/Maemo/i,p=/Meego/i,d=/Symbian/i,v=/Ubuntu Touch/i,m=/webOS/i,g=/Windows CE/i,y=/Windows Phone/i,b=/Windows RT/i,w=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,E=new RegExp("(?:"+"Nexus 7"+"|"+"BNTV250"+"|"+"Kindle Fire"+"|"+"Silk"+"|"+"GT-P1000"+"|"+"MediaPad 7 Youth 2"+")","i");var S=function(e,t){return e.test(t)};var x=function(e){var x=e||navigator.userAgent;this.apple={phone:S(t,x),ipod:S(n,x),tablet:S(r,x),device:S(t,x)||S(n,x)||S(r,x)};this.android={phone:S(i,x),tablet:!S(i,x)&&S(s,x),device:S(i,x)||S(s,x)};this.windows={phone:S(o,x),tablet:S(u,x),device:S(o,x)||S(u,x)};this.other={blackberry:S(a,x),blackberry10:S(f,x),opera:S(l,x),firefox:S(w,x),firefoxos:S(c,x),maemo:S(h,x),meego:S(p,x),symbian:S(d,x),ubuntutouch:S(v,x),webos:S(m,x),windowsce:S(g,x),windowsphone:S(y,x),windowsrt:S(b,x),device:S(a,x)||S(f,x)||S(c,x)||S(m,x)||S(v,x)||S(p,x)||S(h,x)||S(d,x)||S(y,x)||S(l,x)||S(w,x)};this.seven_inch=S(E,x);this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch;this.phone=this.apple.phone||this.android.phone||this.windows.phone;this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet;if(typeof window==="undefined"){return this}};var T=function(){var e=new x;e.Class=x;return e};if(typeof module!="undefined"&&module.exports&&typeof window==="undefined"){module.exports=x}else if(typeof module!="undefined"&&module.exports&&typeof window!=="undefined"){module.exports=T()}else if(typeof define==="function"&&define.amd){define(T())}else{e.isMobile=T()}})(this)
 
 
         // My own arbitrary use of isMobile, as an example
@@ -95,6 +96,9 @@ I include the minified version of the script, inline, and at the top of the `<he
 
             // I only want to redirect iPhones, Android phones and a handful of 7" devices
             if (isMobile.apple.phone || isMobile.android.phone || isMobile.seven_inch) {
+            	
+            //or
+            //if(isMobile.any) {
 
                 // Only redirect if the user didn't previously choose
                 // to explicitly view the full site. This is validated
